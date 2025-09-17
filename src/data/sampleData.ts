@@ -227,9 +227,70 @@ export const videoBytes: VideoByte[] = [
   }
 ];
 
+// Extended sample data for enhanced features
+export const heroArticles: Article[] = [
+  articles[0], // Climate tech
+  articles[1], // Sports championship  
+  articles[2], // Economic recovery
+  articles[3], // Medical breakthrough
+  {
+    id: "hero5",
+    title: "International Space Mission Launches Successfully with Global Collaboration",
+    slug: "space-mission-global-collaboration",
+    excerpt: "Historic space mission brings together multiple nations in unprecedented scientific cooperation for deep space exploration.",
+    content: "A groundbreaking international space mission has successfully launched, marking a new era of global cooperation in space exploration...",
+    author: {
+      name: "Dr. Elena Vasquez",
+      avatar: "/api/placeholder/40/40"
+    },
+    category: "World",
+    publishedAt: "2024-01-15T06:00:00Z",
+    featuredImage: "/api/placeholder/1200/600",
+    readTime: 6,
+    isBreaking: false,
+    isFeatured: true
+  }
+];
+
+export const quickReads: InshortItem[] = [
+  ...inshorts,
+  {
+    id: "qr6",
+    headline: "Renewable Energy Milestone: Wind Power Exceeds Coal",
+    summary: "For the first time in history, wind energy production surpassed coal-generated electricity in daily output across major markets.",
+    image: "/api/placeholder/300/200",
+    source: "Energy Today",
+    category: "Business",
+    publishedAt: "2024-01-15T07:30:00Z",
+    sourceUrl: "#"
+  },
+  {
+    id: "qr7", 
+    headline: "AI Breakthrough in Medical Diagnosis Shows 95% Accuracy",
+    summary: "Advanced artificial intelligence system demonstrates unprecedented accuracy in early disease detection, potentially revolutionizing healthcare.",
+    image: "/api/placeholder/300/200",
+    source: "Med Tech Daily",
+    category: "Technology",
+    publishedAt: "2024-01-15T06:45:00Z",
+    sourceUrl: "#"
+  },
+  {
+    id: "qr8",
+    headline: "Global Climate Summit Announces $500B Green Investment",
+    summary: "World leaders commit to massive green infrastructure investment, targeting carbon neutrality goals with unprecedented funding.",
+    image: "/api/placeholder/300/200",
+    source: "Climate Wire",
+    category: "World",
+    publishedAt: "2024-01-14T22:15:00Z",
+    sourceUrl: "#"
+  }
+];
+
 export const breakingNews = [
   "Revolutionary climate technology breakthrough announced by leading research institute",
   "Championship finals draw record-breaking 150M+ viewers worldwide",
   "Global markets surge following major policy implementation",
-  "Medical breakthrough offers new hope for treatment advancement"
+  "Medical breakthrough offers new hope for treatment advancement",
+  "International space mission launches with global collaboration",
+  "AI medical diagnosis system achieves 95% accuracy milestone"
 ];

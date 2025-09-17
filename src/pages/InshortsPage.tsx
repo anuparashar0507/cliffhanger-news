@@ -4,14 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import InshortCard from "@/components/InshortCard";
-import { inshorts, categories } from "@/data/sampleData";
+import QuickReadCard from "@/components/QuickReadCard";
+import { quickReads, categories } from "@/data/sampleData";
 
 const InshortsPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredInshorts = inshorts.filter(item => {
+  const filteredQuickReads = quickReads.filter(item => {
     const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
     const matchesSearch = item.headline.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          item.summary.toLowerCase().includes(searchQuery.toLowerCase());
@@ -26,8 +26,8 @@ const InshortsPage = () => {
       <section className="py-12 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="headline-large text-brand-navy mb-4">
-              Quick News Updates
+            <h1 className="headline-large text-foreground mb-4">
+              Quick Reads
             </h1>
             <p className="body-large text-muted-foreground mb-8">
               Stay informed with bite-sized news stories. All the important updates in under 100 words.
@@ -38,7 +38,7 @@ const InshortsPage = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 type="text"
-                placeholder="Search inshorts..."
+                placeholder="Search quick reads..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10"
@@ -74,10 +74,10 @@ const InshortsPage = () => {
         </div>
       </section>
 
-      {/* Inshorts Grid */}
+      {/* Quick Reads Grid */}
       <section className="py-12">
         <div className="container mx-auto px-4">
-          {filteredInshorts.length === 0 ? (
+          {filteredQuickReads.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-muted-foreground text-lg">
                 No stories found matching your criteria.
@@ -85,8 +85,8 @@ const InshortsPage = () => {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filteredInshorts.map((item) => (
-                <InshortCard key={item.id} item={item} />
+              {filteredQuickReads.map((item) => (
+                <QuickReadCard key={item.id} item={item} />
               ))}
             </div>
           )}

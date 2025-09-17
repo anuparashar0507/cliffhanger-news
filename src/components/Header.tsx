@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { Search, Menu, X } from "lucide-react";
+import { Search, Menu, X, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useTheme } from "@/contexts/ThemeContext";
 import { categories } from "@/data/sampleData";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const { isDark, toggleTheme } = useTheme();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -46,7 +48,7 @@ const Header = () => {
               </a>
             ))}
             <a href="/inshorts" className="text-foreground hover:text-primary transition-colors font-medium">
-              Inshorts
+              Quick Reads
             </a>
             <a href="/bytes" className="text-foreground hover:text-primary transition-colors font-medium">
               Bytes
@@ -56,8 +58,18 @@ const Header = () => {
             </a>
           </nav>
 
-          {/* Search and Mobile Menu */}
+          {/* Search, Theme Toggle and Mobile Menu */}
           <div className="flex items-center space-x-4">
+            {/* Theme Toggle */}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={toggleTheme}
+              className="p-2"
+            >
+              {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </Button>
+            
             {/* Desktop Search */}
             <div className="hidden md:flex items-center space-x-2">
               <div className="relative">
@@ -115,7 +127,7 @@ const Header = () => {
                   </a>
                 ))}
                 <a href="/inshorts" className="text-foreground hover:text-primary transition-colors font-medium py-2">
-                  Inshorts
+                  Quick Reads
                 </a>
                 <a href="/bytes" className="text-foreground hover:text-primary transition-colors font-medium py-2">
                   Bytes

@@ -111,8 +111,9 @@ All colors MUST be HSL.
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
+    --primary: 39 100% 50%;
     --primary-foreground: 222.2 47.4% 11.2%;
+    --primary-hover: 39 100% 45%;
 
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
@@ -120,7 +121,7 @@ All colors MUST be HSL.
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 217.2 32.6% 17.5%;
+    --accent: 134 44% 31%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
@@ -129,6 +130,12 @@ All colors MUST be HSL.
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+    
+    /* Dark mode news colors */
+    --brand-navy: 210 40% 98%;
+    --breaking-news: 0 84% 60%;
+    --breaking-news-foreground: 0 0% 100%;
+    
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -205,15 +212,31 @@ All colors MUST be HSL.
   }
 
   .category-badge.national {
-    @apply bg-brand-navy/10 text-brand-navy;
+    @apply bg-brand-navy/10 text-brand-navy dark:bg-brand-navy/20 dark:text-brand-navy;
   }
 
   .category-badge.sports {
-    @apply bg-accent/10 text-accent;
+    @apply bg-accent/10 text-accent dark:bg-accent/20 dark:text-accent-foreground;
   }
 
-  .category-badge.tech {
-    @apply bg-primary/10 text-primary;
+  .category-badge.technology {
+    @apply bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary;
+  }
+
+  .category-badge.business {
+    @apply bg-green-500/10 text-green-700 dark:bg-green-500/20 dark:text-green-400;
+  }
+
+  .category-badge.health {
+    @apply bg-blue-500/10 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400;
+  }
+
+  .category-badge.world {
+    @apply bg-purple-500/10 text-purple-700 dark:bg-purple-500/20 dark:text-purple-400;
+  }
+
+  .category-badge.entertainment {
+    @apply bg-pink-500/10 text-pink-700 dark:bg-pink-500/20 dark:text-pink-400;
   }
 
   .category-badge.breaking {
