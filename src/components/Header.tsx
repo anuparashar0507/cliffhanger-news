@@ -1,7 +1,13 @@
 import { useState } from "react";
-import { Search, Menu, X, Moon, Sun } from "lucide-react";
+import { Search, Menu, X, Moon, Sun, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useTheme } from "@/contexts/ThemeContext";
 import { categories } from "@/data/sampleData";
 
@@ -17,9 +23,9 @@ const Header = () => {
       {/* Breaking News Ticker */}
       <div className="bg-breaking-news text-breaking-news-foreground py-1 overflow-hidden">
         <div className="breaking-ticker whitespace-nowrap">
-          🔴 BREAKING: Revolutionary climate technology breakthrough announced • 
-          Championship finals draw record 150M+ viewers • 
-          Global markets surge following policy changes
+          🔴 BREAKING: Revolutionary climate technology breakthrough announced •
+          Championship finals draw record 150M+ viewers • Global markets surge
+          following policy changes
         </div>
       </div>
 
@@ -28,32 +34,63 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold font-serif text-brand-navy">
-              The Cliff News
-            </h1>
+            <img
+              src={isDark ? "/dark-logo.png" : "/light-logo.png"}
+              alt="The Cliff News"
+              className="h-12 w-auto"
+            />
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <a href="/" className="text-foreground hover:text-primary transition-colors font-medium">
+          <nav className="hidden md:flex items-center space-x-6">
+            <a
+              href="/"
+              className="text-foreground hover:text-primary transition-colors font-medium"
+            >
               Home
             </a>
-            {categories.slice(0, 5).map((category) => (
-              <a
-                key={category}
-                href={`/category/${category.toLowerCase()}`}
-                className="text-foreground hover:text-primary transition-colors font-medium"
-              >
-                {category}
-              </a>
-            ))}
-            <a href="/inshorts" className="text-foreground hover:text-primary transition-colors font-medium">
+
+            {/* Categories Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="text-foreground hover:text-primary transition-colors font-medium flex items-center space-x-1"
+                >
+                  <span>Categories</span>
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-48" align="start">
+                {categories.map((category) => (
+                  <DropdownMenuItem key={category} asChild>
+                    <a
+                      href={`/category/${category.toLowerCase()}`}
+                      className="w-full cursor-pointer"
+                    >
+                      {category}
+                    </a>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <a
+              href="/inshorts"
+              className="text-foreground hover:text-primary transition-colors font-medium"
+            >
               Quick Reads
             </a>
-            <a href="/bytes" className="text-foreground hover:text-primary transition-colors font-medium">
+            <a
+              href="/bytes"
+              className="text-foreground hover:text-primary transition-colors font-medium"
+            >
               Bytes
             </a>
-            <a href="/epaper" className="text-foreground hover:text-primary transition-colors font-medium">
+            <a
+              href="/epaper"
+              className="text-foreground hover:text-primary transition-colors font-medium"
+            >
               E-Paper
             </a>
           </nav>
@@ -67,9 +104,13 @@ const Header = () => {
               onClick={toggleTheme}
               className="p-2"
             >
-              {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              {isDark ? (
+                <Sun className="h-5 w-5" />
+              ) : (
+                <Moon className="h-5 w-5" />
+              )}
             </Button>
-            
+
             {/* Desktop Search */}
             <div className="hidden md:flex items-center space-x-2">
               <div className="relative">
@@ -91,7 +132,11 @@ const Header = () => {
               onClick={toggleMenu}
               className="md:hidden"
             >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </Button>
           </div>
         </div>
@@ -114,25 +159,47 @@ const Header = () => {
 
               {/* Mobile Navigation */}
               <nav className="flex flex-col space-y-3">
-                <a href="/" className="text-foreground hover:text-primary transition-colors font-medium py-2">
+                <a
+                  href="/"
+                  className="text-foreground hover:text-primary transition-colors font-medium py-2"
+                >
                   Home
                 </a>
-                {categories.slice(0, 5).map((category) => (
-                  <a
-                    key={category}
-                    href={`/category/${category.toLowerCase()}`}
-                    className="text-foreground hover:text-primary transition-colors font-medium py-2"
-                  >
-                    {category}
-                  </a>
-                ))}
-                <a href="/inshorts" className="text-foreground hover:text-primary transition-colors font-medium py-2">
+
+                {/* Mobile Categories Section */}
+                <div className="py-2">
+                  <h3 className="text-sm font-semibold text-muted-foreground mb-2">
+                    Categories
+                  </h3>
+                  <div className="grid grid-cols-2 gap-2">
+                    {categories.map((category) => (
+                      <a
+                        key={category}
+                        href={`/category/${category.toLowerCase()}`}
+                        className="text-foreground hover:text-primary transition-colors font-medium py-1 text-sm"
+                      >
+                        {category}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                <a
+                  href="/inshorts"
+                  className="text-foreground hover:text-primary transition-colors font-medium py-2"
+                >
                   Quick Reads
                 </a>
-                <a href="/bytes" className="text-foreground hover:text-primary transition-colors font-medium py-2">
+                <a
+                  href="/bytes"
+                  className="text-foreground hover:text-primary transition-colors font-medium py-2"
+                >
                   Bytes
                 </a>
-                <a href="/epaper" className="text-foreground hover:text-primary transition-colors font-medium py-2">
+                <a
+                  href="/epaper"
+                  className="text-foreground hover:text-primary transition-colors font-medium py-2"
+                >
                   E-Paper
                 </a>
               </nav>
