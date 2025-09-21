@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import InshortsPage from "./pages/InshortsPage";
 import VideosBytesPage from "./pages/VideosBytesPage";
 import EPaperPage from "./pages/EPaperPage";
+import FlipBookViewer from "./pages/FlipBookViewer";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
             <Route path="/inshorts" element={<InshortsPage />} />
             <Route path="/bytes" element={<VideosBytesPage />} />
             <Route path="/epaper" element={<EPaperPage />} />
+            <Route path="/flipbook" element={<FlipBookViewer />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

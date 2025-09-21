@@ -4,12 +4,18 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 const EPaperPage = () => {
-  const currentDate = new Date().toLocaleDateString('en-US', { 
-    weekday: 'long', 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
+
+  const currentDate = new Date().toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
   });
+
+  const handleViewPaper = (language: 'english' | 'hindi') => {
+    const pdfFile = language === 'english' ? 'CondoLiving.pdf' : 'TheThreeMusketeers.pdf';
+    window.location.href = `/flipbook?pdf=${pdfFile}&lang=${language}`;
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -88,12 +94,11 @@ const EPaperPage = () => {
                     Interactive PDF viewer would be integrated here with full page navigation, zoom controls, and download capabilities.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Button>
-                      View Full Paper
+                    <Button onClick={() => handleViewPaper('english')}>
+                      View English Edition
                     </Button>
-                    <Button variant="outline">
-                      <Download className="h-4 w-4 mr-2" />
-                      Download PDF
+                    <Button variant="outline" onClick={() => handleViewPaper('hindi')}>
+                      हिंदी संस्करण देखें
                     </Button>
                   </div>
                 </div>

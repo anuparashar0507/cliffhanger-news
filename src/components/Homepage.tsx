@@ -8,6 +8,7 @@ import QuickReadCard from "./QuickReadCard";
 import VideoByteCard from "./VideoByteCard";
 import CategorySection from "./CategorySection";
 import DualEPaperSection from "./DualEPaperSection";
+import StreamlinedEPaperSection from "./StreamlinedEPaperSection";
 import Footer from "./Footer";
 import { articles, heroArticles, quickReads, videoBytes } from "@/data/sampleData";
 
@@ -27,7 +28,7 @@ const Homepage = () => {
       {/* Enhanced Hero Section */}
       <EnhancedHeroSection featuredArticles={heroArticles} />
 
-      {/* Top Stories */}
+      {/* Top Stories - Full Width */}
       <section className="py-12 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between mb-8">
@@ -39,13 +40,17 @@ const Homepage = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {topStories.map((article) => (
+          {/* Full Width Top Stories Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {topStories.concat(articles.filter(article => !article.isFeatured).slice(0, 1)).map((article) => (
               <NewsCard key={article.id} article={article} variant="featured" />
             ))}
           </div>
         </div>
       </section>
+
+      {/* Streamlined E-Paper Section */}
+      <StreamlinedEPaperSection />
 
       {/* Quick Reads Preview */}
       <section className="py-12">
