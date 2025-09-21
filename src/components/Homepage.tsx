@@ -10,21 +10,34 @@ import CategorySection from "./CategorySection";
 import DualEPaperSection from "./DualEPaperSection";
 import StreamlinedEPaperSection from "./StreamlinedEPaperSection";
 import Footer from "./Footer";
-import { articles, heroArticles, quickReads, videoBytes } from "@/data/sampleData";
+import {
+  articles,
+  heroArticles,
+  quickReads,
+  videoBytes,
+} from "@/data/sampleData";
 
 const Homepage = () => {
-  const topStories = articles.filter(article => article.isFeatured).slice(0, 3);
-  const nationalNews = articles.filter(article => article.category === "National");
-  const sportsNews = articles.filter(article => article.category === "Sports");
-  const techNews = articles.filter(article => article.category === "Technology");
+  const topStories = articles
+    .filter((article) => article.isFeatured)
+    .slice(0, 3);
+  const nationalNews = articles.filter(
+    (article) => article.category === "National"
+  );
+  const sportsNews = articles.filter(
+    (article) => article.category === "Sports"
+  );
+  const techNews = articles.filter(
+    (article) => article.category === "Technology"
+  );
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       {/* Stock Market Ticker */}
       <StockTicker />
-      
+
       {/* Enhanced Hero Section */}
       <EnhancedHeroSection featuredArticles={heroArticles} />
 
@@ -42,9 +55,17 @@ const Homepage = () => {
 
           {/* Full Width Top Stories Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {topStories.concat(articles.filter(article => !article.isFeatured).slice(0, 1)).map((article) => (
-              <NewsCard key={article.id} article={article} variant="featured" />
-            ))}
+            {topStories
+              .concat(
+                articles.filter((article) => !article.isFeatured).slice(0, 1)
+              )
+              .map((article) => (
+                <NewsCard
+                  key={article.id}
+                  article={article}
+                  variant="featured"
+                />
+              ))}
           </div>
         </div>
       </section>
@@ -65,7 +86,7 @@ const Homepage = () => {
                 Stay informed with bite-sized news updates
               </p>
             </div>
-            
+
             <Button variant="outline" className="group">
               View All Quick Reads
               <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
@@ -93,7 +114,7 @@ const Homepage = () => {
                 News in motion - quick video updates
               </p>
             </div>
-            
+
             <Button variant="outline" className="group">
               Watch All Videos
               <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
@@ -112,19 +133,16 @@ const Homepage = () => {
       {nationalNews.length > 0 && (
         <CategorySection title="National News" articles={nationalNews} />
       )}
-      
+
       {sportsNews.length > 0 && (
         <div className="bg-muted/30">
           <CategorySection title="Sports" articles={sportsNews} />
         </div>
       )}
-      
+
       {techNews.length > 0 && (
         <CategorySection title="Technology" articles={techNews} />
       )}
-
-      {/* Dual E-Paper Section */}
-      <DualEPaperSection />
 
       <Footer />
     </div>
