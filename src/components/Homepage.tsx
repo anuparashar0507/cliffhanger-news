@@ -7,7 +7,8 @@ import NewsCard from "./NewsCard";
 import QuickReadCard from "./QuickReadCard";
 import VideoByteCard from "./VideoByteCard";
 import HorizontalVideoScroll from "./HorizontalVideoScroll";
-import CategorySection from "./CategorySection";
+import EnhancedCategorySection from "./EnhancedCategorySection";
+import CombinedCategorySection from "./CombinedCategorySection";
 import DualEPaperSection from "./DualEPaperSection";
 import StreamlinedEPaperSection from "./StreamlinedEPaperSection";
 import HighlightsSection from "./HighlightsSection";
@@ -55,14 +56,38 @@ const Homepage = () => {
 
   // Filter articles by category
   const articles = (articlesData?.articles as any[]) || [];
+
+  // Individual category sections
   const nationalNews = articles.filter(
     (article) => article.category?.name === "National"
   );
-  const sportsNews = articles.filter(
-    (article) => article.category?.name === "Sports"
+  const worldNews = articles.filter(
+    (article) => article.category?.name === "World" || article.category?.name === "International"
   );
-  const techNews = articles.filter(
-    (article) => article.category?.name === "Technology"
+  const entertainmentNews = articles.filter(
+    (article) => article.category?.name === "Entertainment"
+  );
+  const politicsNews = articles.filter(
+    (article) => article.category?.name === "Politics"
+  );
+
+  // Combined sections
+  const scienceTechNews = articles.filter(
+    (article) =>
+      article.category?.name === "Science" ||
+      article.category?.name === "Technology" ||
+      article.category?.name === "Tech"
+  );
+  const lifestyleTravelNews = articles.filter(
+    (article) =>
+      article.category?.name === "Lifestyle" ||
+      article.category?.name === "Travel"
+  );
+  const sportsBusinessNews = articles.filter(
+    (article) =>
+      article.category?.name === "Sports" ||
+      article.category?.name === "Business" ||
+      article.category?.name === "Finance"
   );
 
   // Loading state
@@ -157,20 +182,115 @@ const Homepage = () => {
         subtitle="News in motion - quick video updates"
       />
 
-      {/* Category Sections */}
-      {nationalNews.length > 0 && (
-        <CategorySection title="National News" articles={nationalNews} />
-      )}
+      {/* Enhanced Category Sections */}
 
-      {sportsNews.length > 0 && (
-        <div className="bg-muted/30">
-          <CategorySection title="Sports" articles={sportsNews} />
-        </div>
-      )}
+      {/* National News - Hero Layout */}
+      <EnhancedCategorySection
+        title="National News"
+        articles={nationalNews}
+        layout="hero"
+        backgroundColor="default"
+        maxArticles={5}
+      />
 
-      {techNews.length > 0 && (
-        <CategorySection title="Technology" articles={techNews} />
-      )}
+      {/* World News - Featured Layout */}
+      <EnhancedCategorySection
+        title="World News"
+        articles={worldNews}
+        layout="featured"
+        backgroundColor="muted"
+        maxArticles={5}
+      />
+
+      {/* Entertainment - Grid Layout */}
+      <EnhancedCategorySection
+        title="Entertainment"
+        articles={entertainmentNews}
+        layout="grid"
+        backgroundColor="default"
+        maxArticles={4}
+      />
+
+      {/* Politics - Featured Layout */}
+      <EnhancedCategorySection
+        title="Politics"
+        articles={politicsNews}
+        layout="featured"
+        backgroundColor="accent"
+        maxArticles={5}
+      />
+
+      {/* Science & Technology Combined Section */}
+      <CombinedCategorySection
+        title="Science & Technology"
+        subtitle="Exploring innovation, discoveries, and technological breakthroughs"
+        backgroundColor="muted"
+        maxArticlesPerCategory={3}
+        categories={[
+          {
+            name: "Science",
+            articles: scienceTechNews.filter(article =>
+              article.category?.name === "Science"
+            ),
+            color: "bg-blue-500"
+          },
+          {
+            name: "Technology",
+            articles: scienceTechNews.filter(article =>
+              article.category?.name === "Technology" || article.category?.name === "Tech"
+            ),
+            color: "bg-purple-500"
+          }
+        ]}
+      />
+
+      {/* Lifestyle & Travel Combined Section */}
+      <CombinedCategorySection
+        title="Lifestyle & Travel"
+        subtitle="Discover culture, wellness, and wanderlust inspiration"
+        backgroundColor="default"
+        maxArticlesPerCategory={3}
+        categories={[
+          {
+            name: "Lifestyle",
+            articles: lifestyleTravelNews.filter(article =>
+              article.category?.name === "Lifestyle"
+            ),
+            color: "bg-pink-500"
+          },
+          {
+            name: "Travel",
+            articles: lifestyleTravelNews.filter(article =>
+              article.category?.name === "Travel"
+            ),
+            color: "bg-green-500"
+          }
+        ]}
+      />
+
+      {/* Sports & Business Combined Section */}
+      <CombinedCategorySection
+        title="Sports & Business"
+        subtitle="Competition, markets, and economic insights"
+        backgroundColor="muted"
+        maxArticlesPerCategory={2}
+        categories={[
+          {
+            name: "Sports",
+            articles: sportsBusinessNews.filter(article =>
+              article.category?.name === "Sports"
+            ),
+            color: "bg-orange-500"
+          },
+          {
+            name: "Business",
+            articles: sportsBusinessNews.filter(article =>
+              article.category?.name === "Business" || article.category?.name === "Finance"
+            ),
+            color: "bg-emerald-500"
+          }
+        ]}
+      />
 
       <Footer />
     </div>

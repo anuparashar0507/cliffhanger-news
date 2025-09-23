@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import NewsCard from "./NewsCard";
 import { Article } from "@/services";
 
@@ -7,12 +8,14 @@ interface CategorySectionProps {
   title: string;
   articles: Article[];
   showViewAll?: boolean;
+  categorySlug?: string;
 }
 
 const CategorySection = ({
   title,
   articles,
   showViewAll = true,
+  categorySlug,
 }: CategorySectionProps) => {
   return (
     <section className="py-12">
@@ -25,10 +28,12 @@ const CategorySection = ({
           </div>
 
           {showViewAll && (
-            <Button variant="outline" className="group">
-              View All
-              <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
-            </Button>
+            <Link to={`/category/${categorySlug || title.toLowerCase()}`}>
+              <Button variant="outline" className="group">
+                View All
+                <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
+              </Button>
+            </Link>
           )}
         </div>
 
@@ -42,10 +47,12 @@ const CategorySection = ({
         {/* Show more button on mobile */}
         {showViewAll && (
           <div className="flex justify-center mt-8 md:hidden">
-            <Button variant="outline" className="group">
-              View All {title}
-              <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
-            </Button>
+            <Link to={`/category/${categorySlug || title.toLowerCase()}`}>
+              <Button variant="outline" className="group">
+                View All {title}
+                <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
+              </Button>
+            </Link>
           </div>
         )}
       </div>

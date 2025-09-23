@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Clock, User, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { Article } from "@/services";
 
 interface EnhancedHeroSectionProps {
@@ -141,12 +142,14 @@ const EnhancedHeroSection = ({
           </div>
 
           {/* CTA Button */}
-          <Button
-            size="lg"
-            className="bg-primary hover:bg-primary-hover text-primary-foreground font-medium animate-fade-in-up"
-          >
-            Read Full Story
-          </Button>
+          <Link to={`/article/${currentArticle.id}`}>
+            <Button
+              size="lg"
+              className="bg-primary hover:bg-primary-hover text-primary-foreground font-medium animate-fade-in-up"
+            >
+              Read Full Story
+            </Button>
+          </Link>
         </div>
       </div>
 

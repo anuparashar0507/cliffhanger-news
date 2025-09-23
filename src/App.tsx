@@ -11,6 +11,7 @@ import EPaperPage from "./pages/EPaperPage";
 import FlipBookViewer from "./pages/FlipBookViewer";
 import HighlightsPage from "./pages/HighlightsPage";
 import NITPage from "./pages/NITPage";
+import ArticlePage from "./pages/ArticlePage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/flipbook" element={<FlipBookViewer />} />
             <Route path="/highlights" element={<HighlightsPage />} />
             <Route path="/nit" element={<NITPage />} />
+            <Route path="/article/:id" element={<ArticlePage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

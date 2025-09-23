@@ -1,5 +1,6 @@
 import { Clock, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { Article } from "@/services";
 
 interface HeroSectionProps {
@@ -79,12 +80,14 @@ const HeroSection = ({ featuredArticle }: HeroSectionProps) => {
           </div>
 
           {/* CTA Button */}
-          <Button
-            size="lg"
-            className="bg-primary hover:bg-primary-hover text-primary-foreground font-medium animate-fade-in-up"
-          >
-            Read Full Story
-          </Button>
+          <Link to={`/article/${featuredArticle.id}`}>
+            <Button
+              size="lg"
+              className="bg-primary hover:bg-primary-hover text-primary-foreground font-medium animate-fade-in-up"
+            >
+              Read Full Story
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

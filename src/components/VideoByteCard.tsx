@@ -1,5 +1,6 @@
 import { Play, Heart, Share2, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { YouTubeShort } from "@/services";
 
 interface VideoByteCardProps {
@@ -33,14 +34,14 @@ const VideoByteCard = ({ video }: VideoByteCardProps) => {
         />
 
         {/* Play Button Overlay */}
-        <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <Link to="/bytes" className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <Button
             size="lg"
-            className="rounded-full bg-white/90 text-black hover:bg-white"
+            className="rounded-full bg-white/90 text-black hover:bg-white pointer-events-none"
           >
             <Play className="h-6 w-6 ml-1" />
           </Button>
-        </div>
+        </Link>
 
         {/* Duration Badge */}
         <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded">
@@ -91,10 +92,12 @@ const VideoByteCard = ({ video }: VideoByteCardProps) => {
             </Button>
           </div>
 
-          <Button variant="outline" size="sm" className="text-xs">
-            <Play className="h-3 w-3 mr-1" />
-            Watch
-          </Button>
+          <Link to="/bytes">
+            <Button variant="outline" size="sm" className="text-xs">
+              <Play className="h-3 w-3 mr-1" />
+              Watch
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

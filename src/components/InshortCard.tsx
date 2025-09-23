@@ -1,5 +1,6 @@
 import { ExternalLink, Share2, Bookmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { Inshort } from "@/services";
 
 interface InshortCardProps {
@@ -60,10 +61,12 @@ const InshortCard = ({ item }: InshortCardProps) => {
             </Button>
           </div>
 
-          <Button variant="outline" size="sm" className="text-xs">
-            <ExternalLink className="h-3 w-3 mr-1" />
-            Read Full
-          </Button>
+          <Link to={`/article/${item.id}`}>
+            <Button variant="outline" size="sm" className="text-xs">
+              <ExternalLink className="h-3 w-3 mr-1" />
+              Read Full
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

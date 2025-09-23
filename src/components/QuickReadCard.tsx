@@ -1,5 +1,6 @@
 import { Share2, Bookmark, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { Inshort } from "@/services";
 
 interface QuickReadCardProps {
@@ -62,12 +63,14 @@ const QuickReadCard = ({ item }: QuickReadCardProps) => {
 
         {/* Actions */}
         <div className="flex space-x-2">
-          <Button
-            size="sm"
-            className="flex-1 bg-primary hover:bg-primary-hover text-primary-foreground text-sm font-medium"
-          >
-            Read Full
-          </Button>
+          <Link to={`/article/${item.id}`} className="flex-1">
+            <Button
+              size="sm"
+              className="w-full bg-primary hover:bg-primary-hover text-primary-foreground text-sm font-medium"
+            >
+              Read Full
+            </Button>
+          </Link>
 
           <Button variant="outline" size="sm" className="p-2 h-8 w-8">
             <Share2 className="h-3 w-3" />
