@@ -9,6 +9,8 @@ import InshortsPage from "./pages/InshortsPage";
 import VideosBytesPage from "./pages/VideosBytesPage";
 import EPaperPage from "./pages/EPaperPage";
 import FlipBookViewer from "./pages/FlipBookViewer";
+import HighlightsPage from "./pages/HighlightsPage";
+import NITPage from "./pages/NITPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -19,13 +21,15 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        <BrowserRouter future={{ v7_relativeSplatPath: true }}>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/inshorts" element={<InshortsPage />} />
             <Route path="/bytes" element={<VideosBytesPage />} />
             <Route path="/epaper" element={<EPaperPage />} />
             <Route path="/flipbook" element={<FlipBookViewer />} />
+            <Route path="/highlights" element={<HighlightsPage />} />
+            <Route path="/nit" element={<NITPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

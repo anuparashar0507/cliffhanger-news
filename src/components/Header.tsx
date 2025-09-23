@@ -9,12 +9,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useTheme } from "@/contexts/ThemeContext";
-import { categories } from "@/data/sampleData";
+import { useCategories } from "@/hooks";
+import { Category } from "@/services";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const { isDark, toggleTheme } = useTheme();
+  const { data: categoriesData } = useCategories();
+  const categories: Category[] =
+    (categoriesData?.categories as Category[]) || [];
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -63,12 +67,12 @@ const Header = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-48" align="start">
                 {categories.map((category) => (
-                  <DropdownMenuItem key={category} asChild>
+                  <DropdownMenuItem key={category.id} asChild>
                     <a
-                      href={`/category/${category.toLowerCase()}`}
+                      href={`/category/${category.slug}`}
                       className="w-full cursor-pointer"
                     >
-                      {category}
+                      {category.name}
                     </a>
                   </DropdownMenuItem>
                 ))}
@@ -86,6 +90,18 @@ const Header = () => {
               className="text-foreground hover:text-primary transition-colors font-medium"
             >
               Bytes
+            </a>
+            <a
+              href="/highlights"
+              className="text-foreground hover:text-primary transition-colors font-medium"
+            >
+              Highlights
+            </a>
+            <a
+              href="/nit"
+              className="text-foreground hover:text-primary transition-colors font-medium"
+            >
+              NIT
             </a>
             <a
               href="/epaper"
@@ -174,11 +190,11 @@ const Header = () => {
                   <div className="grid grid-cols-2 gap-2">
                     {categories.map((category) => (
                       <a
-                        key={category}
-                        href={`/category/${category.toLowerCase()}`}
+                        key={category.id}
+                        href={`/category/${category.slug}`}
                         className="text-foreground hover:text-primary transition-colors font-medium py-1 text-sm"
                       >
-                        {category}
+                        {category.name}
                       </a>
                     ))}
                   </div>
@@ -195,6 +211,18 @@ const Header = () => {
                   className="text-foreground hover:text-primary transition-colors font-medium py-2"
                 >
                   Bytes
+                </a>
+                <a
+                  href="/highlights"
+                  className="text-foreground hover:text-primary transition-colors font-medium py-2"
+                >
+                  Highlights
+                </a>
+                <a
+                  href="/nit"
+                  className="text-foreground hover:text-primary transition-colors font-medium py-2"
+                >
+                  NIT
                 </a>
                 <a
                   href="/epaper"

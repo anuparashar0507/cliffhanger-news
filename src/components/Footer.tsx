@@ -1,10 +1,22 @@
-import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin } from "lucide-react";
+import {
+  Facebook,
+  Twitter,
+  Instagram,
+  Youtube,
+  Mail,
+  Phone,
+  MapPin,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { categories } from "@/data/sampleData";
+import { useCategories } from "@/hooks";
+import { Category } from "@/services";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { data: categoriesData } = useCategories();
+  const categories: Category[] =
+    (categoriesData?.categories as Category[]) || [];
 
   return (
     <footer className="bg-brand-navy text-white">
@@ -16,7 +28,8 @@ const Footer = () => {
               Stay Informed with The Cliff News
             </h3>
             <p className="body-medium mb-6 text-white/80">
-              Get the latest breaking news, in-depth analysis, and exclusive stories delivered to your inbox.
+              Get the latest breaking news, in-depth analysis, and exclusive
+              stories delivered to your inbox.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <Input
@@ -37,22 +50,41 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <h3 className="text-2xl font-bold font-serif mb-4">The Cliff News</h3>
+            <h3 className="text-2xl font-bold font-serif mb-4">
+              The Cliff News
+            </h3>
             <p className="text-white/80 mb-6">
-              Your trusted source for professional journalism, breaking news, and in-depth analysis. 
-              Delivering truth and transparency since day one.
+              Your trusted source for professional journalism, breaking news,
+              and in-depth analysis. Delivering truth and transparency since day
+              one.
             </p>
             <div className="flex space-x-4">
-              <Button variant="ghost" size="sm" className="text-white hover:text-primary hover:bg-white/10">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-white hover:text-primary hover:bg-white/10"
+              >
                 <Facebook className="h-5 w-5" />
               </Button>
-              <Button variant="ghost" size="sm" className="text-white hover:text-primary hover:bg-white/10">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-white hover:text-primary hover:bg-white/10"
+              >
                 <Twitter className="h-5 w-5" />
               </Button>
-              <Button variant="ghost" size="sm" className="text-white hover:text-primary hover:bg-white/10">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-white hover:text-primary hover:bg-white/10"
+              >
                 <Instagram className="h-5 w-5" />
               </Button>
-              <Button variant="ghost" size="sm" className="text-white hover:text-primary hover:bg-white/10">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-white hover:text-primary hover:bg-white/10"
+              >
                 <Youtube className="h-5 w-5" />
               </Button>
             </div>
@@ -62,12 +94,54 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold text-lg mb-4">Quick Links</h4>
             <ul className="space-y-2">
-              <li><a href="/" className="text-white/80 hover:text-white transition-colors">Home</a></li>
-              <li><a href="/inshorts" className="text-white/80 hover:text-white transition-colors">Inshorts</a></li>
-              <li><a href="/bytes" className="text-white/80 hover:text-white transition-colors">Video Bytes</a></li>
-              <li><a href="/epaper" className="text-white/80 hover:text-white transition-colors">E-Paper</a></li>
-              <li><a href="/about" className="text-white/80 hover:text-white transition-colors">About Us</a></li>
-              <li><a href="/contact" className="text-white/80 hover:text-white transition-colors">Contact</a></li>
+              <li>
+                <a
+                  href="/"
+                  className="text-white/80 hover:text-white transition-colors"
+                >
+                  Home
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/inshorts"
+                  className="text-white/80 hover:text-white transition-colors"
+                >
+                  Inshorts
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/bytes"
+                  className="text-white/80 hover:text-white transition-colors"
+                >
+                  Video Bytes
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/epaper"
+                  className="text-white/80 hover:text-white transition-colors"
+                >
+                  E-Paper
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/about"
+                  className="text-white/80 hover:text-white transition-colors"
+                >
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/contact"
+                  className="text-white/80 hover:text-white transition-colors"
+                >
+                  Contact
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -76,12 +150,12 @@ const Footer = () => {
             <h4 className="font-semibold text-lg mb-4">Categories</h4>
             <ul className="space-y-2">
               {categories.slice(0, 6).map((category) => (
-                <li key={category}>
-                  <a 
-                    href={`/category/${category.toLowerCase()}`} 
+                <li key={category.id}>
+                  <a
+                    href={`/category/${category.slug}`}
                     className="text-white/80 hover:text-white transition-colors"
                   >
-                    {category}
+                    {category.name}
                   </a>
                 </li>
               ))}
@@ -103,7 +177,8 @@ const Footer = () => {
               <div className="flex items-start space-x-3">
                 <MapPin className="h-4 w-4 text-primary mt-1" />
                 <span className="text-white/80">
-                  123 News Street<br />
+                  123 News Street
+                  <br />
                   Media City, MC 12345
                 </span>
               </div>
@@ -120,13 +195,22 @@ const Footer = () => {
               © {currentYear} The Cliff News. All rights reserved.
             </p>
             <div className="flex space-x-6 text-sm">
-              <a href="/privacy" className="text-white/60 hover:text-white transition-colors">
+              <a
+                href="/privacy"
+                className="text-white/60 hover:text-white transition-colors"
+              >
                 Privacy Policy
               </a>
-              <a href="/terms" className="text-white/60 hover:text-white transition-colors">
+              <a
+                href="/terms"
+                className="text-white/60 hover:text-white transition-colors"
+              >
                 Terms of Service
               </a>
-              <a href="/cookies" className="text-white/60 hover:text-white transition-colors">
+              <a
+                href="/cookies"
+                className="text-white/60 hover:text-white transition-colors"
+              >
                 Cookie Policy
               </a>
             </div>

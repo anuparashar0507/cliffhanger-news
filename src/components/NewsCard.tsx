@@ -1,6 +1,6 @@
 import { Clock, User, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Article } from "@/data/sampleData";
+import { Article } from "@/services";
 
 interface NewsCardProps {
   article: Article;
@@ -10,9 +10,9 @@ interface NewsCardProps {
 const NewsCard = ({ article, variant = "default" }: NewsCardProps) => {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      month: 'short', 
-      day: 'numeric' 
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
     });
   };
 
@@ -32,8 +32,12 @@ const NewsCard = ({ article, variant = "default" }: NewsCardProps) => {
                   BREAKING
                 </span>
               )}
-              <span className={`category-badge ${article.category.toLowerCase()} text-xs`}>
-                {article.category}
+              <span
+                className={`category-badge ${
+                  article.category?.name?.toLowerCase() || "uncategorized"
+                } text-xs`}
+              >
+                {article.category?.name || "Uncategorized"}
               </span>
             </div>
             <h3 className="font-semibold text-sm leading-tight mb-2 line-clamp-2">
@@ -67,12 +71,16 @@ const NewsCard = ({ article, variant = "default" }: NewsCardProps) => {
             </div>
           )}
           <div className="absolute bottom-4 left-4">
-            <span className={`category-badge ${article.category.toLowerCase()}`}>
-              {article.category}
+            <span
+              className={`category-badge ${
+                article.category?.name?.toLowerCase() || "uncategorized"
+              }`}
+            >
+              {article.category?.name || "Uncategorized"}
             </span>
           </div>
         </div>
-        
+
         <div className="p-6">
           <h2 className="headline-small mb-3 group-hover:text-primary transition-colors">
             {article.title}
@@ -80,12 +88,12 @@ const NewsCard = ({ article, variant = "default" }: NewsCardProps) => {
           <p className="body-medium text-muted-foreground mb-4 line-clamp-3">
             {article.excerpt}
           </p>
-          
+
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4 text-sm text-muted-foreground">
               <div className="flex items-center space-x-1">
                 <User className="h-4 w-4" />
-                <span>{article.author.name}</span>
+                <span>{article.author?.name || "Unknown Author"}</span>
               </div>
               <div className="flex items-center space-x-1">
                 <Clock className="h-4 w-4" />
@@ -93,8 +101,12 @@ const NewsCard = ({ article, variant = "default" }: NewsCardProps) => {
               </div>
               <span>{article.readTime} min read</span>
             </div>
-            
-            <Button variant="ghost" size="sm" className="group-hover:text-primary">
+
+            <Button
+              variant="ghost"
+              size="sm"
+              className="group-hover:text-primary"
+            >
               <ArrowRight className="h-4 w-4" />
             </Button>
           </div>
@@ -119,12 +131,16 @@ const NewsCard = ({ article, variant = "default" }: NewsCardProps) => {
           </div>
         )}
         <div className="absolute bottom-3 left-3">
-          <span className={`category-badge ${article.category.toLowerCase()} text-xs`}>
-            {article.category}
+          <span
+            className={`category-badge ${
+              article.category?.name?.toLowerCase() || "uncategorized"
+            } text-xs`}
+          >
+            {article.category?.name || "Uncategorized"}
           </span>
         </div>
       </div>
-      
+
       <div className="p-4">
         <h3 className="font-semibold text-lg leading-tight mb-2 group-hover:text-primary transition-colors line-clamp-2">
           {article.title}
@@ -132,10 +148,10 @@ const NewsCard = ({ article, variant = "default" }: NewsCardProps) => {
         <p className="body-small text-muted-foreground mb-3 line-clamp-2">
           {article.excerpt}
         </p>
-        
+
         <div className="flex items-center justify-between text-xs text-muted-foreground">
           <div className="flex items-center space-x-2">
-            <span>{article.author.name}</span>
+            <span>{article.author?.name || "Unknown Author"}</span>
             <span>•</span>
             <span>{formatDate(article.publishedAt)}</span>
           </div>

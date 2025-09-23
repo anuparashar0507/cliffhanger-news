@@ -1,6 +1,6 @@
 import { Clock, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Article } from "@/data/sampleData";
+import { Article } from "@/services";
 
 interface HeroSectionProps {
   featuredArticle: Article;
@@ -9,10 +9,10 @@ interface HeroSectionProps {
 const HeroSection = ({ featuredArticle }: HeroSectionProps) => {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
@@ -42,8 +42,12 @@ const HeroSection = ({ featuredArticle }: HeroSectionProps) => {
 
           {/* Category Badge */}
           <div className="mb-4">
-            <span className={`category-badge ${featuredArticle.category.toLowerCase()}`}>
-              {featuredArticle.category}
+            <span
+              className={`category-badge ${
+                featuredArticle.category?.name?.toLowerCase() || "uncategorized"
+              }`}
+            >
+              {featuredArticle.category?.name || "Uncategorized"}
             </span>
           </div>
 
@@ -61,20 +65,22 @@ const HeroSection = ({ featuredArticle }: HeroSectionProps) => {
           <div className="flex items-center space-x-6 mb-6 text-white/80 animate-fade-in-up">
             <div className="flex items-center space-x-2">
               <User className="h-4 w-4" />
-              <span className="text-sm font-medium">{featuredArticle.author.name}</span>
+              <span className="text-sm font-medium">
+                {featuredArticle.author?.name || "Unknown Author"}
+              </span>
             </div>
             <div className="flex items-center space-x-2">
               <Clock className="h-4 w-4" />
-              <span className="text-sm">{formatDate(featuredArticle.publishedAt)}</span>
+              <span className="text-sm">
+                {formatDate(featuredArticle.publishedAt)}
+              </span>
             </div>
-            <div className="text-sm">
-              {featuredArticle.readTime} min read
-            </div>
+            <div className="text-sm">{featuredArticle.readTime} min read</div>
           </div>
 
           {/* CTA Button */}
-          <Button 
-            size="lg" 
+          <Button
+            size="lg"
             className="bg-primary hover:bg-primary-hover text-primary-foreground font-medium animate-fade-in-up"
           >
             Read Full Story

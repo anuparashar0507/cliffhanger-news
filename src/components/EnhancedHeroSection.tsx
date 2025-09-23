@@ -1,32 +1,34 @@
 import { useState, useEffect } from "react";
 import { Clock, User, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Article } from "@/data/sampleData";
+import { Article } from "@/services";
 
 interface EnhancedHeroSectionProps {
   featuredArticles: Article[];
 }
 
-const EnhancedHeroSection = ({ featuredArticles }: EnhancedHeroSectionProps) => {
+const EnhancedHeroSection = ({
+  featuredArticles,
+}: EnhancedHeroSectionProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
 
   useEffect(() => {
     if (!isAutoPlay) return;
-    
+
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % featuredArticles.length);
     }, 5000);
-    
+
     return () => clearInterval(interval);
   }, [featuredArticles.length, isAutoPlay]);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
@@ -37,7 +39,9 @@ const EnhancedHeroSection = ({ featuredArticles }: EnhancedHeroSectionProps) => 
   };
 
   const goToPrevious = () => {
-    setCurrentIndex((prev) => (prev - 1 + featuredArticles.length) % featuredArticles.length);
+    setCurrentIndex(
+      (prev) => (prev - 1 + featuredArticles.length) % featuredArticles.length
+    );
     setIsAutoPlay(false);
     setTimeout(() => setIsAutoPlay(true), 10000);
   };
@@ -59,7 +63,7 @@ const EnhancedHeroSection = ({ featuredArticles }: EnhancedHeroSectionProps) => 
         <div
           key={article.id}
           className={`absolute inset-0 transition-opacity duration-1000 ${
-            index === currentIndex ? 'opacity-100' : 'opacity-0'
+            index === currentIndex ? "opacity-100" : "opacity-0"
           }`}
         >
           <img
@@ -78,7 +82,7 @@ const EnhancedHeroSection = ({ featuredArticles }: EnhancedHeroSectionProps) => 
       >
         <ChevronLeft className="h-6 w-6" />
       </button>
-      
+
       <button
         onClick={goToNext}
         className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-black/50 text-white p-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/70"
@@ -100,8 +104,12 @@ const EnhancedHeroSection = ({ featuredArticles }: EnhancedHeroSectionProps) => 
 
           {/* Category Badge */}
           <div className="mb-4">
-            <span className={`category-badge ${currentArticle.category.toLowerCase()}`}>
-              {currentArticle.category}
+            <span
+              className={`category-badge ${
+                currentArticle.category?.name?.toLowerCase() || "uncategorized"
+              }`}
+            >
+              {currentArticle.category?.name || "Uncategorized"}
             </span>
           </div>
 
@@ -119,20 +127,22 @@ const EnhancedHeroSection = ({ featuredArticles }: EnhancedHeroSectionProps) => 
           <div className="flex items-center space-x-6 mb-6 text-white/80 animate-fade-in-up">
             <div className="flex items-center space-x-2">
               <User className="h-4 w-4" />
-              <span className="text-sm font-medium">{currentArticle.author.name}</span>
+              <span className="text-sm font-medium">
+                {currentArticle.author?.name || "Unknown Author"}
+              </span>
             </div>
             <div className="flex items-center space-x-2">
               <Clock className="h-4 w-4" />
-              <span className="text-sm">{formatDate(currentArticle.publishedAt)}</span>
+              <span className="text-sm">
+                {formatDate(currentArticle.publishedAt)}
+              </span>
             </div>
-            <div className="text-sm">
-              {currentArticle.readTime} min read
-            </div>
+            <div className="text-sm">{currentArticle.readTime} min read</div>
           </div>
 
           {/* CTA Button */}
-          <Button 
-            size="lg" 
+          <Button
+            size="lg"
             className="bg-primary hover:bg-primary-hover text-primary-foreground font-medium animate-fade-in-up"
           >
             Read Full Story
@@ -147,7 +157,7 @@ const EnhancedHeroSection = ({ featuredArticles }: EnhancedHeroSectionProps) => 
             key={index}
             onClick={() => goToSlide(index)}
             className={`w-3 h-3 rounded-full transition-all ${
-              index === currentIndex ? 'bg-white' : 'bg-white/50'
+              index === currentIndex ? "bg-white" : "bg-white/50"
             }`}
           />
         ))}
@@ -155,11 +165,11 @@ const EnhancedHeroSection = ({ featuredArticles }: EnhancedHeroSectionProps) => 
 
       {/* Progress Bar */}
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20 z-20">
-        <div 
+        <div
           className="h-full bg-primary transition-all duration-[5000ms] ease-linear"
-          style={{ 
-            width: isAutoPlay ? '100%' : '0%',
-            transitionDuration: isAutoPlay ? '5000ms' : '0ms'
+          style={{
+            width: isAutoPlay ? "100%" : "0%",
+            transitionDuration: isAutoPlay ? "5000ms" : "0ms",
           }}
         />
       </div>

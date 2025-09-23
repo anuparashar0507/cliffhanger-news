@@ -19,18 +19,18 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        
+
         /* Brand Colors */
         "brand-orange": "hsl(var(--brand-orange))",
         "brand-navy": "hsl(var(--brand-navy))",
         "brand-green": "hsl(var(--brand-green))",
-        
+
         /* News Colors */
         "breaking-news": "hsl(var(--breaking-news))",
         "breaking-news-foreground": "hsl(var(--breaking-news-foreground))",
         "trending": "hsl(var(--trending))",
         "trending-foreground": "hsl(var(--trending-foreground))",
-        
+
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -106,5 +106,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require("@tailwindcss/line-clamp")],
+  plugins: [require("tailwindcss-animate")],
 } satisfies Config;

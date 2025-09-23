@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import NewsCard from "./NewsCard";
-import { Article } from "@/data/sampleData";
+import { Article } from "@/services";
 
 interface CategorySectionProps {
   title: string;
@@ -9,19 +9,21 @@ interface CategorySectionProps {
   showViewAll?: boolean;
 }
 
-const CategorySection = ({ title, articles, showViewAll = true }: CategorySectionProps) => {
+const CategorySection = ({
+  title,
+  articles,
+  showViewAll = true,
+}: CategorySectionProps) => {
   return (
     <section className="py-12">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h2 className="headline-medium text-brand-navy mb-2">
-              {title}
-            </h2>
+            <h2 className="headline-medium text-brand-navy mb-2">{title}</h2>
             <div className="w-12 h-1 bg-primary rounded-full"></div>
           </div>
-          
+
           {showViewAll && (
             <Button variant="outline" className="group">
               View All
