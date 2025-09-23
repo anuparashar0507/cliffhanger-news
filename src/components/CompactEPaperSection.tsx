@@ -1,141 +1,213 @@
-import { Calendar, Eye } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import PDFThumbnailGenerator from "./PDFThumbnailGenerator";
+import React, { useState } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Calendar, Download, Eye, FileText, ChevronLeft, ChevronRight } from 'lucide-react';
 
-interface EPaper {
-  language: string;
+interface EPaperItem {
+  id: string;
   date: string;
-  title: string;
-  pdfUrl: string;
+  language: 'english' | 'hindi';
+  pages: number;
+  thumbnail: string;
+  size: string;
+  downloadUrl: string;
 }
 
-const CompactEPaperSection = () => {
-  const today = new Date();
+const CompactEPaperSection: React.FC = () => {
+  const [selectedDate, setSelectedDate] = useState<string>(
+    new Date().toISOString().split('T')[0]
+  );
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
 
-  const englishPaper: EPaper = {
-    language: "English",
-    date: today.toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric'
-    }),
-    title: "The Cliff News",
-    pdfUrl: "CondoLiving.pdf" // PDF filename
+  // Generate sample e-papers for the last week
+  const generateEPapers = (): EPaperItem[] => {
+    const papers: EPaperItem[] = [];
+    const today = new Date();
+    
+    for (let i = 0; i < 14; i++) {
+      const date = new Date(today);
+      date.setDate(date.getDate() - i);
+      
+      const dateStr = date.toISOString().split('T')[0];
+      const formattedDate = date.toLocaleDateString('en-US', { 
+        month: 'long', 
+        day: 'numeric', 
+        year: 'numeric' 
+      });
+      const hindiDate = date.toLocaleDateString('hi-IN', { 
+        month: 'long', 
+        day: 'numeric', 
+        year: 'numeric' 
+      });
+
+      papers.push(
+        {
+          id: `english-${dateStr}`,
+          date: formattedDate,
+          language: 'english',
+          pages: Math.floor(Math.random() * 8) + 12,
+          thumbnail: '/sample-pdfs/CondoLiving.pdf',
+          size: `${(Math.random() * 5 + 8).toFixed(1)} MB`,
+          downloadUrl: '/sample-pdfs/CondoLiving.pdf'
+        },
+        {
+          id: `hindi-${dateStr}`,
+          date: hindiDate,
+          language: 'hindi',
+          pages: Math.floor(Math.random() * 6) + 10,
+          thumbnail: '/sample-pdfs/TheThreeMusketeers.pdf',
+          size: `${(Math.random() * 4 + 7).toFixed(1)} MB`,
+          downloadUrl: '/sample-pdfs/TheThreeMusketeers.pdf'
+        }
+      );
+    }
+    
+    return papers;
   };
 
-  const hindiPaper: EPaper = {
-    language: "हिंदी",
-    date: today.toLocaleDateString('hi-IN', {
-      month: 'short',
-      day: 'numeric'
-    }),
-    title: "द क्लिफ न्यूज़",
-    pdfUrl: "TheThreeMusketeers.pdf" // PDF filename
-  };
+  const epapers = generateEPapers();
+  const totalPages = Math.ceil(epapers.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const displayedPapers = epapers.slice(startIndex, startIndex + itemsPerPage);
 
-  const handleEPaperClick = (paper: EPaper) => {
-    const lang = paper.language === "English" ? "english" : "hindi";
-    window.location.href = `/flipbook?pdf=${paper.pdfUrl}&lang=${lang}`;
+  const getLanguageBadge = (language: string) => {
+    return language === 'english' 
+      ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300'
+      : 'bg-primary/10 text-primary dark:bg-primary/20';
   };
 
   return (
-    <div className="bg-card border border-border rounded-lg p-6 shadow-sm">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h3 className="text-lg font-bold text-foreground mb-1">
-            Read E-paper
-          </h3>
-          <p className="text-sm text-muted-foreground flex items-center">
-            <Calendar className="h-3 w-3 mr-1" />
-            {today.toLocaleDateString('en-US', {
-              weekday: 'long',
-              month: 'long',
-              day: 'numeric'
-            })}
+    <div className="min-h-screen bg-background py-8">
+      <div className="container mx-auto px-4">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-foreground mb-4">
+            📰 E-Paper Archive
+          </h1>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            Access our digital newspaper archive in English and Hindi. Browse through past editions and download for offline reading.
           </p>
         </div>
-      </div>
 
-      {/* E-Paper Thumbnails */}
-      <div className="space-y-4">
-        {/* English Edition */}
-        <div
-          className="group cursor-pointer"
-          onClick={() => handleEPaperClick(englishPaper)}
-        >
-          <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/50 transition-colors">
-            <div className="flex-shrink-0">
-              <PDFThumbnailGenerator
-                pdfUrl={`/sample-pdfs/${englishPaper.pdfUrl}`}
-                width={64}
-                height={80}
-                className="group-hover:shadow-md transition-shadow"
-                alt="English E-Paper Thumbnail"
-              />
-            </div>
-            <div className="flex-1 min-w-0">
-              <h4 className="font-semibold text-sm text-foreground group-hover:text-primary transition-colors">
-                {englishPaper.title}
-              </h4>
-              <p className="text-xs text-muted-foreground mb-2">
-                {englishPaper.language} Edition
-              </p>
-              <div className="flex items-center space-x-2">
-                <Button size="sm" variant="outline" className="h-7 text-xs">
-                  <Eye className="h-3 w-3 mr-1" />
-                  Read Now
-                </Button>
-              </div>
-            </div>
+        {/* Date Selector */}
+        <div className="flex justify-center mb-8">
+          <div className="flex items-center space-x-4 bg-muted/50 p-4 rounded-lg">
+            <Calendar className="h-5 w-5 text-muted-foreground" />
+            <label className="text-sm font-medium text-foreground">Select Date:</label>
+            <Input
+              type="date"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              className="w-auto"
+            />
           </div>
         </div>
 
-        {/* Hindi Edition */}
-        <div
-          className="group cursor-pointer"
-          onClick={() => handleEPaperClick(hindiPaper)}
-        >
-          <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/50 transition-colors">
-            <div className="flex-shrink-0">
-              <PDFThumbnailGenerator
-                pdfUrl={`/sample-pdfs/${hindiPaper.pdfUrl}`}
-                width={64}
-                height={80}
-                className="group-hover:shadow-md transition-shadow"
-                alt="Hindi E-Paper Thumbnail"
-              />
-            </div>
-            <div className="flex-1 min-w-0">
-              <h4 className="font-semibold text-sm text-foreground group-hover:text-primary transition-colors">
-                {hindiPaper.title}
-              </h4>
-              <p className="text-xs text-muted-foreground mb-2">
-                {hindiPaper.language} Edition
-              </p>
-              <div className="flex items-center space-x-2">
-                <Button size="sm" variant="outline" className="h-7 text-xs">
-                  <Eye className="h-3 w-3 mr-1" />
-                  अभी पढ़ें
-                </Button>
+        {/* E-Papers Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          {displayedPapers.map((epaper) => (
+            <Card key={epaper.id} className="overflow-hidden hover:shadow-lg transition-all duration-300 group">
+              <div className="relative">
+                {/* Thumbnail */}
+                <div className="h-80 bg-muted flex items-center justify-center relative overflow-hidden">
+                  <div className="bg-white dark:bg-gray-800 w-48 h-64 rounded-lg shadow-lg border border-border flex items-center justify-center transform group-hover:scale-105 transition-transform duration-300">
+                    <div className="text-center p-6">
+                      <FileText className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+                      <div className="text-sm text-muted-foreground mb-2">
+                        The Cliff News
+                      </div>
+                      <div className="text-sm font-bold text-foreground mb-1">
+                        {epaper.language === 'english' ? 'English Edition' : 'हिंदी संस्करण'}
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        {epaper.date}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Language Badge */}
+                <div className="absolute top-4 right-4">
+                  <Badge className={getLanguageBadge(epaper.language)}>
+                    {epaper.language === 'english' ? 'ENGLISH' : 'हिंदी'}
+                  </Badge>
+                </div>
               </div>
-            </div>
-          </div>
+
+              <CardContent className="p-6">
+                <div className="mb-4">
+                  <h3 className="font-bold text-lg text-foreground mb-2">
+                    {epaper.language === 'english' ? 'English Edition' : 'हिंदी संस्करण'}
+                  </h3>
+                  <p className="text-muted-foreground text-sm">{epaper.date}</p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
+                  <div className="text-center p-3 bg-muted/50 rounded-lg">
+                    <div className="font-semibold text-primary">{epaper.pages}</div>
+                    <div className="text-muted-foreground">Pages</div>
+                  </div>
+                  <div className="text-center p-3 bg-muted/50 rounded-lg">
+                    <div className="font-semibold text-primary">{epaper.size}</div>
+                    <div className="text-muted-foreground">Size</div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-3">
+                  <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+                    <Eye className="h-4 w-4 mr-2" />
+                    Read Online
+                  </Button>
+                  <Button variant="outline" className="w-full">
+                    <Download className="h-4 w-4 mr-2" />
+                    Download PDF
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
-      </div>
 
-      {/* Archive Link */}
-      <div className="mt-4 pt-4 border-t border-border">
-        <Button
-          variant="ghost"
-          size="sm"
-          className="w-full text-xs"
-          onClick={() => window.location.href = '/epaper'}
-        >
-          <Calendar className="h-3 w-3 mr-2" />
-          Browse Archive
-        </Button>
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center space-x-4">
+            <Button
+              variant="outline"
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+            >
+              <ChevronLeft className="h-4 w-4 mr-1" />
+              Previous
+            </Button>
+            
+            <div className="flex space-x-2">
+              {Array.from({ length: totalPages }, (_, i) => (
+                <Button
+                  key={i + 1}
+                  variant={currentPage === i + 1 ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setCurrentPage(i + 1)}
+                  className="w-10"
+                >
+                  {i + 1}
+                </Button>
+              ))}
+            </div>
+            
+            <Button
+              variant="outline"
+              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages}
+            >
+              Next
+              <ChevronRight className="h-4 w-4 ml-1" />
+            </Button>
+          </div>
+        )}
       </div>
-
     </div>
   );
 };

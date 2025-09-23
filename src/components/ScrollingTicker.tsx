@@ -1,107 +1,54 @@
-import React, { useEffect, useRef, memo } from "react";
-import { useTheme } from "@/contexts/ThemeContext";
+import React, { useEffect } from 'react';
 
-function ScrollingTicker() {
-  const { isDark } = useTheme();
-  const container = useRef<HTMLDivElement>(null);
-
+const ScrollingTicker = () => {
   useEffect(() => {
-    if (container.current) {
-      // Clear previous content to prevent duplicates
-      container.current.innerHTML = "";
+    const script = document.createElement("script");
+    script.src = "https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js";
+    script.type = "text/javascript";
+    script.async = true;
+    script.innerHTML = JSON.stringify({
+      "symbols": [
+        {"proName": "BSE:SENSEX", "title": "SENSEX"},
+        {"proName": "NSE:NIFTY", "title": "NIFTY 50"},
+        {"proName": "BSE:RELIANCE", "title": "Reliance"},
+        {"proName": "BSE:TCS", "title": "TCS"},
+        {"proName": "BSE:HDFCBANK", "title": "HDFC Bank"},
+        {"proName": "BSE:INFY", "title": "Infosys"},
+        {"proName": "BSE:ITC", "title": "ITC"},
+        {"proName": "BSE:HINDUNILVR", "title": "HUL"},
+        {"proName": "FOREXCOM:USDINR", "title": "USD/INR"},
+        {"proName": "TVC:GOLD", "title": "Gold"},
+        {"proName": "TVC:SILVER", "title": "Silver"}
+      ],
+      "showSymbolLogo": true,
+      "colorTheme": "light",
+      "isTransparent": false,
+      "displayMode": "adaptive",
+      "locale": "in"
+    });
 
-      const script = document.createElement("script");
-      script.src =
-        "https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js";
-      script.type = "text/javascript";
-      script.async = true;
-      script.innerHTML = `
-        {
-          "symbols": [
-            {
-              "proName": "BSE:SENSEX",
-              "title": "BSE SENSEX"
-            },
-            {
-              "proName": "BSE:RELIANCE",
-              "title": "RELIANCE"
-            },
-            {
-              "proName": "BSE:TCS",
-              "title": "TCS"
-            },
-            {
-              "proName": "BSE:HDFCBANK",
-              "title": "HDFC Bank"
-            },
-            {
-              "proName": "BSE:INFY",
-              "title": "Infosys"
-            },
-            {
-              "proName": "BSE:ITC",
-              "title": "ITC"
-            },
-            {
-              "proName": "BSE:ICICIBANK",
-              "title": "ICICI Bank"
-            },
-            {
-              "proName": "BSE:HINDUNILVR",
-              "title": "HUL"
-            },
-            {
-              "proName": "BSE:LT",
-              "title": "L&T"
-            },
-            {
-              "proName": "BSE:SBIN",
-              "title": "SBI"
-            },
-            {
-              "proName": "BSE:BHARTIARTL",
-              "title": "Bharti Airtel"
-            },
-            {
-              "proName": "BSE:ASIANPAINT",
-              "title": "Asian Paints"
-            },
-            {
-              "proName": "BSE:MARUTI",
-              "title": "Maruti Suzuki"
-            },
-            {
-              "proName": "BITSTAMP:BTCUSD",
-              "title": "Bitcoin"
-            },
-            {
-              "proName": "BITSTAMP:ETHUSD",
-              "title": "Ethereum"
-            }
-          ],
-          "colorTheme": "${isDark ? "dark" : "light"}",
-          "locale": "in",
-          "largeChartUrl": "",
-          "isTransparent": true,
-          "showSymbolLogo": false,
-          "displayMode": "adaptive"
-        }`;
-      container.current.appendChild(script);
+    const container = document.getElementById("tradingview-ticker");
+    if (container) {
+      container.appendChild(script);
     }
-  }, [isDark]);
+
+    return () => {
+      const existingScript = document.getElementById("tradingview-ticker")?.querySelector('script');
+      if (existingScript) {
+        existingScript.remove();
+      }
+    };
+  }, []);
 
   return (
-    <div
-      className="tradingview-widget-container w-full overflow-hidden"
-      ref={container}
-      style={{ height: "40px", maxWidth: "100%" }}
+    <div 
+      id="tradingview-ticker" 
+      className="tradingview-widget-container w-full h-10"
+      style={{ height: '40px' }}
     >
-      <div className="tradingview-widget-container__widget"></div>
-      <div className="tradingview-widget-copyright hidden">
-        <span>Ticker tape by TradingView</span>
-      </div>
+      <div className="tradingview-widget-container__widget w-full h-full"></div>
     </div>
   );
-}
+};
 
-export default memo(ScrollingTicker);
+export default ScrollingTicker;

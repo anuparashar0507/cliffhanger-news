@@ -26,7 +26,7 @@ const HighlightsSection: React.FC<HighlightsSectionProps> = ({
   showViewAll = true,
 }) => {
   const { data: highlightsData, isLoading: loading } = useHighlights({ limit });
-  const highlights = highlightsData?.highlights || [];
+  const highlights = (highlightsData?.highlights as Highlight[]) || [];
 
   const getPriorityBadge = (isBreaking: boolean) => {
     if (isBreaking) {

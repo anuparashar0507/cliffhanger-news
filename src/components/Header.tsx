@@ -25,7 +25,7 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 bg-background border-b border-border">
       {/* Breaking News Ticker */}
-      <div className="bg-breaking-news text-breaking-news-foreground py-1 overflow-hidden">
+      <div className="bg-primary text-primary-foreground py-1 overflow-hidden">
         <div className="breaking-ticker whitespace-nowrap">
           🔴 BREAKING: Revolutionary climate technology breakthrough announced •
           Championship finals draw record 150M+ viewers • Global markets surge

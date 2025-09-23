@@ -11,6 +11,7 @@ import CategorySection from "./CategorySection";
 import DualEPaperSection from "./DualEPaperSection";
 import StreamlinedEPaperSection from "./StreamlinedEPaperSection";
 import HighlightsSection from "./HighlightsSection";
+import HoroscopeSection from "./HoroscopeSection";
 import Footer from "./Footer";
 import {
   useArticles,
@@ -53,18 +54,16 @@ const Homepage = () => {
   }, []);
 
   // Filter articles by category
-  const nationalNews =
-    articlesData?.articles?.filter(
-      (article) => article.category?.name === "National"
-    ) || [];
-  const sportsNews =
-    articlesData?.articles?.filter(
-      (article) => article.category?.name === "Sports"
-    ) || [];
-  const techNews =
-    articlesData?.articles?.filter(
-      (article) => article.category?.name === "Technology"
-    ) || [];
+  const articles = (articlesData?.articles as any[]) || [];
+  const nationalNews = articles.filter(
+    (article) => article.category?.name === "National"
+  );
+  const sportsNews = articles.filter(
+    (article) => article.category?.name === "Sports"
+  );
+  const techNews = articles.filter(
+    (article) => article.category?.name === "Technology"
+  );
 
   // Loading state
   if (
@@ -91,7 +90,7 @@ const Homepage = () => {
       <StockTicker />
 
       {/* Enhanced Hero Section */}
-      <EnhancedHeroSection featuredArticles={articlesData?.articles || []} />
+      <EnhancedHeroSection featuredArticles={articles} />
 
       {/* Top Stories - Full Width */}
       <section className="py-12 bg-muted/30">
@@ -107,7 +106,7 @@ const Homepage = () => {
 
           {/* Full Width Top Stories Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {topStoriesData?.topStories?.map((article) => (
+            {((topStoriesData?.topStories as any[]) || []).map((article) => (
               <NewsCard key={article.id} article={article} variant="featured" />
             ))}
           </div>
@@ -116,6 +115,9 @@ const Homepage = () => {
 
       {/* Streamlined E-Paper Section */}
       <StreamlinedEPaperSection />
+
+      {/* Daily Horoscope Section */}
+      <HoroscopeSection />
 
       {/* Highlights Section */}
       <HighlightsSection />
@@ -141,7 +143,7 @@ const Homepage = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-            {quickReadsData?.inshorts?.map((item) => (
+            {((quickReadsData?.inshorts as any[]) || []).map((item) => (
               <QuickReadCard key={item.id} item={item} />
             ))}
           </div>
@@ -150,7 +152,7 @@ const Homepage = () => {
 
       {/* Video Bytes Preview - Horizontal Scroll */}
       <HorizontalVideoScroll
-        videos={videoBytesData?.shorts || []}
+        videos={((videoBytesData?.shorts as any[]) || [])}
         title="Video Bytes"
         subtitle="News in motion - quick video updates"
       />
