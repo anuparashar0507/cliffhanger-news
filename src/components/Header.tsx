@@ -11,6 +11,7 @@ import {
 import { useTheme } from "@/contexts/ThemeContext";
 import { useCategories } from "@/hooks";
 import { Category } from "@/services";
+import Link from "next/link";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -47,12 +48,12 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
-            <a
+            <Link
               href="/"
               className="text-foreground hover:text-primary transition-colors font-medium"
             >
               Home
-            </a>
+            </Link>
 
             {/* Categories Dropdown */}
             <DropdownMenu>
@@ -68,47 +69,47 @@ const Header = () => {
               <DropdownMenuContent className="w-48" align="start">
                 {categories.map((category) => (
                   <DropdownMenuItem key={category.id} asChild>
-                    <a
+                    <Link
                       href={`/category/${category.slug}`}
                       className="w-full cursor-pointer"
                     >
                       {category.name}
-                    </a>
+                    </Link>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <a
+            <Link
               href="/inshorts"
               className="text-foreground hover:text-primary transition-colors font-medium"
             >
               Quick Reads
-            </a>
-            <a
-              href="/bytes"
+            </Link>
+            <Link
+              href="/videos"
               className="text-foreground hover:text-primary transition-colors font-medium"
             >
-              Bytes
-            </a>
-            <a
+              Videos
+            </Link>
+            <Link
               href="/highlights"
               className="text-foreground hover:text-primary transition-colors font-medium"
             >
               Highlights
-            </a>
-            <a
+            </Link>
+            <Link
               href="/nit"
               className="text-foreground hover:text-primary transition-colors font-medium"
             >
               NIT
-            </a>
-            <a
+            </Link>
+            <Link
               href="/epaper"
               className="text-foreground hover:text-primary transition-colors font-medium"
             >
               E-Paper
-            </a>
+            </Link>
           </nav>
 
           {/* Search, Theme Toggle and Mobile Menu */}
@@ -175,12 +176,12 @@ const Header = () => {
 
               {/* Mobile Navigation */}
               <nav className="flex flex-col space-y-3">
-                <a
+                <Link
                   href="/"
                   className="text-foreground hover:text-primary transition-colors font-medium py-2"
                 >
                   Home
-                </a>
+                </Link>
 
                 {/* Mobile Categories Section */}
                 <div className="py-2">
@@ -189,47 +190,47 @@ const Header = () => {
                   </h3>
                   <div className="grid grid-cols-2 gap-2">
                     {categories.map((category) => (
-                      <a
+                      <Link
                         key={category.id}
                         href={`/category/${category.slug}`}
                         className="text-foreground hover:text-primary transition-colors font-medium py-1 text-sm"
                       >
                         {category.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
 
-                <a
+                <Link
                   href="/inshorts"
                   className="text-foreground hover:text-primary transition-colors font-medium py-2"
                 >
                   Quick Reads
-                </a>
-                <a
-                  href="/bytes"
+                </Link>
+                <Link
+                  href="/videos"
                   className="text-foreground hover:text-primary transition-colors font-medium py-2"
                 >
-                  Bytes
-                </a>
-                <a
+                  Videos
+                </Link>
+                <Link
                   href="/highlights"
                   className="text-foreground hover:text-primary transition-colors font-medium py-2"
                 >
                   Highlights
-                </a>
-                <a
+                </Link>
+                <Link
                   href="/nit"
                   className="text-foreground hover:text-primary transition-colors font-medium py-2"
                 >
                   NIT
-                </a>
-                <a
+                </Link>
+                <Link
                   href="/epaper"
                   className="text-foreground hover:text-primary transition-colors font-medium py-2"
                 >
                   E-Paper
-                </a>
+                </Link>
               </nav>
             </div>
           </div>

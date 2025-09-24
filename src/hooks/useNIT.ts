@@ -11,7 +11,7 @@ export const nitKeys = {
 };
 
 // Hooks for NIT
-export const useNITs = (filters?: NITFilters) => {
+export const useNIT = (filters?: NITFilters) => {
     return useQuery({
         queryKey: nitKeys.list(filters || {}),
         queryFn: () => nitApi.getNITs(filters),
@@ -19,7 +19,7 @@ export const useNITs = (filters?: NITFilters) => {
     });
 };
 
-export const useNIT = (id: string) => {
+export const useNITById = (id: string) => {
     return useQuery({
         queryKey: nitKeys.detail(id),
         queryFn: () => nitApi.getNIT(id),

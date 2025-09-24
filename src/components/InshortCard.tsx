@@ -1,13 +1,13 @@
 import { ExternalLink, Share2, Bookmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Inshort } from "@/services";
 
 interface InshortCardProps {
-  item: Inshort;
+  inshort: Inshort;
 }
 
-const InshortCard = ({ item }: InshortCardProps) => {
+const InshortCard = ({ inshort }: InshortCardProps) => {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -22,33 +22,33 @@ const InshortCard = ({ item }: InshortCardProps) => {
     <div className="news-card p-0 max-w-sm mx-auto">
       <div className="relative">
         <img
-          src={item.image}
-          alt={item.headline}
+          src={inshort.image}
+          alt={inshort.headline}
           className="w-full h-48 object-cover"
         />
         <div className="absolute top-3 left-3">
           <span
             className={`category-badge ${
-              item.category?.name?.toLowerCase() || "uncategorized"
+              inshort.category?.name?.toLowerCase() || "uncategorized"
             } text-xs`}
           >
-            {item.category?.name || "Uncategorized"}
+            {inshort.category?.name || "Uncategorized"}
           </span>
         </div>
       </div>
 
       <div className="p-4">
         <h3 className="font-bold text-lg leading-tight mb-3 font-serif">
-          {item.headline}
+          {inshort.headline}
         </h3>
 
         <p className="body-small text-muted-foreground mb-4 leading-relaxed">
-          {item.summary}
+          {inshort.summary}
         </p>
 
         <div className="flex items-center justify-between text-xs text-muted-foreground mb-4">
-          <span className="font-medium">{item.source}</span>
-          <span>{formatDate(item.publishedAt)}</span>
+          <span className="font-medium">{inshort.source}</span>
+          <span>{formatDate(inshort.publishedAt)}</span>
         </div>
 
         <div className="flex items-center justify-between pt-3 border-t border-border">
@@ -61,12 +61,14 @@ const InshortCard = ({ item }: InshortCardProps) => {
             </Button>
           </div>
 
-          <Link to={`/article/${item.id}`}>
-            <Button variant="outline" size="sm" className="text-xs">
-              <ExternalLink className="h-3 w-3 mr-1" />
-              Read Full
-            </Button>
-          </Link>
+          {inshort.sourceUrl && (
+            <Link href={inshort.sourceUrl} target="_blank" rel="noopener noreferrer">
+              <Button variant="outline" size="sm" className="text-xs">
+                <ExternalLink className="h-3 w-3 mr-1" />
+                Read Full
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
     </div>

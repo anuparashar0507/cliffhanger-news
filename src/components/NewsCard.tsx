@@ -1,6 +1,6 @@
 import { Clock, User, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Article } from "@/services";
 
 interface NewsCardProps {
@@ -19,7 +19,7 @@ const NewsCard = ({ article, variant = "default" }: NewsCardProps) => {
 
   if (variant === "compact") {
     return (
-      <Link to={`/article/${article.id}`}>
+      <Link href={`/article/${article.id}`}>
         <article className="news-card p-4 transition-transform hover:scale-[1.02] cursor-pointer">
           <div className="flex space-x-4">
             <img
@@ -59,7 +59,7 @@ const NewsCard = ({ article, variant = "default" }: NewsCardProps) => {
 
   if (variant === "featured") {
     return (
-      <Link to={`/article/${article.id}`}>
+      <Link href={`/article/${article.id}`}>
         <article className="news-card group cursor-pointer">
           <div className="relative overflow-hidden">
             <img
@@ -121,7 +121,7 @@ const NewsCard = ({ article, variant = "default" }: NewsCardProps) => {
   }
 
   return (
-    <Link to={`/article/${article.id}`}>
+    <Link href={`/article/${article.id}`}>
       <article className="news-card group cursor-pointer">
         <div className="relative overflow-hidden">
           <img
